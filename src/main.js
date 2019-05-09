@@ -33,6 +33,7 @@ import d2VueFiltersDayjs from '@d2-admin/filters-dayjs'
 import router from './router'
 import { menuHeader, menuAside } from '@/menu'
 import { frameInRoutes } from '@/router/routes'
+import { mapState, mapMutations } from 'vuex'
 
 // 核心插件
 Vue.use(d2Admin)
@@ -62,6 +63,28 @@ new Vue({
     this.$store.commit('d2admin/menu/headerSet', menuHeader)
     // 初始化菜单搜索功能
     this.$store.commit('d2admin/search/init', menuHeader)
+          // this.asideSet([
+          //     {
+          //         title: '空菜单演示',
+          //         icon: 'folder-o',
+          //         children: [
+          //             {
+          //                 title: '空菜单 1',
+          //                 children: [
+          //                     { title: '空菜单 1-1' },
+          //                     { title: '空菜单 1-2' }
+          //                 ]
+          //             },
+          //             { title: '空菜单 2' },
+          //             { title: '空菜单 3' }
+          //         ]
+          //     }
+          // ])
+          // this.$notify({
+          //     title: '菜单修改',
+          //     message: '对侧边栏菜单的修改已经生效',
+          //     type: 'success'
+          // })
   },
   mounted () {
     // 展示系统信息
@@ -84,5 +107,11 @@ new Vue({
       },
       immediate: true
     }
-  }
+  },
+    methods: {
+    ...mapMutations('d2admin/menu', [
+            'headerSet',
+            'asideSet'
+        ]),
+    }
 }).$mount('#app')

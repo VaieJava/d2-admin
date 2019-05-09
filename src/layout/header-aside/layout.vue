@@ -81,6 +81,7 @@
 </template>
 
 <script>
+    import { mapMutations } from 'vuex'
 import d2MenuSide from './components/menu-side'
 import d2MenuHeader from './components/menu-header'
 import d2Tabs from './components/tabs'
@@ -137,9 +138,39 @@ export default {
       }
     }
   },
+    created() {
+      conosle.log(this.asideSet);
+        this.asideSet([
+            {
+                "title": "空菜单演示",
+                "icon": "folder-o",
+                "children": [
+                    {
+                        "title": "空菜单 1",
+                        "children": [
+                            {
+                                "title": "空菜单 1-1"
+                            },
+                            {
+                                "title": "空菜单 1-2"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "空菜单 2"
+                    },
+                    {
+                        "title": "空菜单 3"
+                    }
+                ]
+            }
+        ])
+    },
   methods: {
     ...mapActions('d2admin/menu', [
-      'asideCollapseToggle'
+      'asideCollapseToggle',
+        'headerSet',
+        'asideSet'
     ]),
     /**
      * 接收点击切换侧边栏的按钮

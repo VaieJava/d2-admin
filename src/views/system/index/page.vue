@@ -35,6 +35,7 @@
 <script>
 import D2HelpBtn from './components/d2-help-btn'
 import D2Badge from './components/d2-badge'
+import { mapState, mapMutations } from 'vuex'
 export default {
   components: {
     D2HelpBtn,
@@ -44,7 +45,18 @@ export default {
     return {
       filename: __filename
     }
-  }
+  },
+    created() {
+
+        console.log(this.asideSet);
+        this.asideSet(JSON.parse(localStorage.getItem('menu')));
+    },
+    methods: {
+        ...mapMutations('d2admin/menu', [
+            'headerSet',
+            'asideSet'
+        ])
+    }
 }
 </script>
 

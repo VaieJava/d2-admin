@@ -108,6 +108,7 @@ export default {
      * 修改侧边栏菜单
      */
     handleAsideSet () {
+        console.log(this.asideSet)
       this.asideChanged = true
       this.asideSet(this.menuEmpty)
       this.$notify({

@@ -31,6 +31,15 @@ const frameIn = [
         },
         component: _import('system/index')
       },
+            // 首页
+            {
+                path: 'test',
+                name: 'test',
+                meta: {
+                    auth: true
+                },
+                component: _import('system/test')
+            },
       // 系统 前端日志
       {
         path: 'log',

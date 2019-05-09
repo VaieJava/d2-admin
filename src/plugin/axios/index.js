@@ -35,7 +35,7 @@ function errorLog (error) {
 
 // 创建一个 axios 实例
 const service = axios.create({
-  baseURL: process.env.VUE_APP_API,
+  baseURL: process.env.VUE_APP_API === 'development' ? 'http://localhost:9001' : 'http://localhost:9001', // api的base_url,
   timeout: 5000 // 请求超时时间
 })
 
@@ -44,8 +44,9 @@ service.interceptors.request.use(
   config => {
     // 在请求发送之前做一些处理
     const token = util.cookies.get('token')
-    // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-    config.headers['X-Token'] = token
+    // // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
+    // config.headers['X-Token'] = token
+    config.headers['Authorization'] = 'Bearer ' + token// 让每个请求携带token
     return config
   },
   error => {
