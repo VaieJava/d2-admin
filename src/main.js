@@ -61,6 +61,7 @@ new Vue({
     this.$store.commit('d2admin/page/init', frameInRoutes)
     // 设置顶栏菜单
     this.$store.commit('d2admin/menu/headerSet', menuHeader)
+    this.$store.commit('d2admin/menu/asideSet', JSON.parse(localStorage.getItem('menu')))
     // 初始化菜单搜索功能
     this.$store.commit('d2admin/search/init', menuHeader)
           // this.asideSet([

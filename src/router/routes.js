@@ -31,15 +31,56 @@ const frameIn = [
         },
         component: _import('system/index')
       },
-            // 首页
-            {
-                path: 'test',
-                name: 'test',
-                meta: {
-                    auth: true
-                },
-                component: _import('system/test')
+      //
+      {
+          path: 'test',
+          name: 'test',
+          meta: {
+              title: '测试',
+              auth: true
+          },
+          component: _import('system/test')
+      },
+        // 用户
+        {
+            path: 'member',
+            name: 'member',
+            meta: {
+                title: '管理员管理',
+                auth: true
             },
+            component: _import('system/member')
+        },
+    // 菜单
+    {
+        path: 'menu',
+        name: 'menu',
+        meta: {
+            title: '菜单管理',
+            auth: true
+        },
+        component: _import('system/menu')
+    },
+        //角色管理
+    {
+        path: 'role',
+        name: 'role',
+        meta: {
+            title: '角色管理',
+            auth: true
+        },
+        component: _import('system/role')
+    },
+        //权限管理
+    {
+        path: 'permission',
+        name: 'permission',
+        meta: {
+            title: '权限管理',
+            auth: true
+        },
+        component: _import('system/permission')
+    },
       // 系统 前端日志
       {
         path: 'log',

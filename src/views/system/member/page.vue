@@ -9,15 +9,15 @@
                 :loading="loading"/>
         <demo-page-footer
                 slot="footer"
-                :current="page.pageCurrent"
-                :size="page.pageSize"
-                :total="page.pageTotal"
+                :current="page.current"
+                :size="page.size"
+                :total="page.total"
                 @change="handlePaginationChange"/>
     </d2-container>
 </template>
 
 <script>
-    import { MenuList } from '@api/sys.menu.js'
+    import { MemberList } from '@api/sys.member.js'
     export default {
         // name 值和本页的 $route.name 一致才可以缓存页面
         name: 'demo-business-table-1',
@@ -31,48 +31,38 @@
                 table: [],
                 loading: false,
                 page: {
-                    pageCurrent: 1,
-                    pageSize: 10,
-                    pageTotal: 0
+                    current: 1,
+                    size: 10,
+                    total: 0,
+                    sort: "id"
                 }
             }
         },
+        created () {
+            this.handleSubmit()
+        },
         methods: {
             handlePaginationChange(val) {
-                this.$notify({
-                    title: '分页变化',
-                    message: `当前第${val.current}页 共${val.total}条 每页${val.size}条`
-                })
                 this.page = val
+                this.handleSubmit()
                 // nextTick 只是为了优化示例中 notify 的显示
-                this.$nextTick(() => {
-                    this.$refs.header.handleFormSubmit()
-                })
+                // this.$nextTick(() => {
+                //     this.$refs.header.handleFormSubmit()
+                // })
             },
             handleSubmit(form) {
                 this.loading = true
-                this.$notify({
-                    title: '开始请求模拟表格数据'
-                })
-                MenuList({
+                MemberList({
                     ...form,
                     ...this.page
                 })
                     .then(res => {
-                        debugger
                         this.loading = false
-                        this.$notify({
-                            title: '模拟表格数据请求完毕'
-                        })
                         this.table = res.content
-                        this.page.pageTotal = res.totalPages
+                        this.page.total = res.totalElements
                     })
                     .catch(err => {
                         this.loading = false
-                        this.$notify({
-                            title: '模拟表格数据请求异常'
-                        })
-                        console.log('err', err)
                     })
             }
         }

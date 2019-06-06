@@ -47,9 +47,8 @@ export default {
     }
   },
     created() {
-
-        console.log(this.asideSet);
         this.asideSet(JSON.parse(localStorage.getItem('menu')));
+        // this.headerSet(JSON.parse(localStorage.getItem('menu')))
     },
     methods: {
         ...mapMutations('d2admin/menu', [

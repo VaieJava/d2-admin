@@ -35,7 +35,7 @@ function errorLog (error) {
 
 // 创建一个 axios 实例
 const service = axios.create({
-  baseURL: process.env.VUE_APP_API === 'development' ? 'http://localhost:9001' : 'http://localhost:9001', // api的base_url,
+  baseURL: process.env.VUE_APP_API === 'development' ? 'http://39.107.226.36:9001' : 'http://39.107.226.36:9001', // api的base_url,
   timeout: 5000 // 请求超时时间
 })
 
@@ -70,8 +70,8 @@ service.interceptors.response.use(
     } else {
       // 有 code 代表这是一个后端接口 可以进行进一步的判断
       switch (code) {
-        case 0:
-          // [ 示例 ] code === 0 代表没有错误
+        case 200:
+          // [ 示例 ] code === 200 代表没有错误
           return dataAxios.data
         case 'xxx':
           // [ 示例 ] 其它和后台约定的 code

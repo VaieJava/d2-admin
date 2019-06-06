@@ -1,7 +1,8 @@
 import { Message, MessageBox } from 'element-ui'
 import util from '@/libs/util.js'
 import router from '@/router'
-import { AccountLogin } from '@api/sys.login'
+import { AccountLogin,getUserInfo} from '@api/sys.login'
+import { GetMenuInfo } from '@api/sys.menu'
 
 export default {
   namespaced: true,
@@ -11,14 +12,17 @@ export default {
      * @param {Object} param context
      * @param {Object} param username {String} 用户账号
      * @param {Object} param password {String} 密码
+     * @param {Object} param grant_type {String} 登录方式
+     * @param {Object} param client_id {String} 客户端id
+     * @param {Object} param client_secret {String} 客户端密码
      * @param {Object} param route {Object} 登录成功后定向的路由对象 任何 vue-router 支持的格式
      */
     login ({ dispatch }, {
       username = '',
       password = '',
       grant_type = 'password',
-        client_id='client',
-        client_secret='123456'
+      client_id='client',
+      client_secret='123456'
     } = {}) {
       return new Promise((resolve, reject) => {
         // 开始请求登录接口
@@ -39,35 +43,13 @@ export default {
             // 如有必要 token 需要定时更新，默认保存一天
             util.cookies.set('uuid', res.userId)
             util.cookies.set('token', res.access_token)
-            // 设置 vuex 用户信息
-              let _DATA = [
-                  {
-                      "title": "杨南洲",
-                      "icon": "folder-o",
-                      "children": [
-                          {
-                              "title": "空菜单28888",
-                              "children": [
-                                  {
-                                    "path": "test",
-                                      "title": "空菜单 1-1"
-                                  },
-                                  {
-                                      "path": "index",
-                                      "title": "空菜单 1-2"
-                                  }
-                              ]
-                          },
-                          {
-                              "title": "空菜单 2"
-                          },
-                          {
-                              "title": "空菜单 3"
-                          }
-                      ]
-                  }
-              ]
-              localStorage.setItem('menu',JSON.stringify(_DATA))
+
+              GetMenuInfo({
+                  id:res.userId
+              }).then( mRes => {
+                  localStorage.setItem('menu',JSON.stringify(mRes))
+              })
+              // 设置 vuex 用户信息
             await dispatch('d2admin/user/set', {
               name: res.userName
 
