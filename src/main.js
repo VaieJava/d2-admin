@@ -30,10 +30,11 @@ import pluginImport from '@d2-projects/vue-table-import'
 import d2VueFiltersDayjs from '@d2-admin/filters-dayjs'
 
 // 菜单和路由设置
+import util from '@/libs/util.js'
 import router from './router'
 import { menuHeader, menuAside } from '@/menu'
 import { frameInRoutes } from '@/router/routes'
-import { mapState, mapMutations } from 'vuex'
+import { MenuList,GetMenuListByMenuId,GetMenuInfo} from '@api/sys.menu.js'
 
 // 核心插件
 Vue.use(d2Admin)
@@ -59,33 +60,21 @@ new Vue({
   created () {
     // 处理路由 得到每一级的路由设置
     this.$store.commit('d2admin/page/init', frameInRoutes)
+      const uuid = util.cookies.get('uuid')
+
     // 设置顶栏菜单
-    this.$store.commit('d2admin/menu/headerSet', menuHeader)
-    this.$store.commit('d2admin/menu/asideSet', JSON.parse(localStorage.getItem('menu')))
+      GetMenuInfo({
+          id:uuid
+      }).then( mRes => {
+          // localStorage.setItem('menu',JSON.stringify(mRes))
+          this.$store.commit('d2admin/menu/headerSet', mRes)
+      }).catch(err => {
+          this.loading = false
+      })
+
+    // this.$store.commit('d2admin/menu/asideSet', JSON.parse(localStorage.getItem('menu')))
     // 初始化菜单搜索功能
     this.$store.commit('d2admin/search/init', menuHeader)
-          // this.asideSet([
-          //     {
-          //         title: '空菜单演示',
-          //         icon: 'folder-o',
-          //         children: [
-          //             {
-          //                 title: '空菜单 1',
-          //                 children: [
-          //                     { title: '空菜单 1-1' },
-          //                     { title: '空菜单 1-2' }
-          //                 ]
-          //             },
-          //             { title: '空菜单 2' },
-          //             { title: '空菜单 3' }
-          //         ]
-          //     }
-          // ])
-          // this.$notify({
-          //     title: '菜单修改',
-          //     message: '对侧边栏菜单的修改已经生效',
-          //     type: 'success'
-          // })
   },
   mounted () {
     // 展示系统信息
@@ -102,17 +91,17 @@ new Vue({
     '$route.matched': {
       handler (matched) {
         if (matched.length > 0) {
-          const _side = menuAside.filter(menu => menu.path === matched[0].path)
-          this.$store.commit('d2admin/menu/asideSet', _side.length > 0 ? _side[0].children : [])
+            GetMenuListByMenuId({
+                menuId:matched[1].name
+            }).then(res => {
+                this.$store.commit('d2admin/menu/asideSet', res.length > 0 ? res[0].children : [])
+            })
+                .catch(err => {
+                    this.loading = false
+                })
         }
       },
       immediate: true
     }
-  },
-    methods: {
-    ...mapMutations('d2admin/menu', [
-            'headerSet',
-            'asideSet'
-        ]),
-    }
+  }
 }).$mount('#app')

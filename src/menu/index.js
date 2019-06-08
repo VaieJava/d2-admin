@@ -19,38 +19,15 @@ import demoFrame from './modules/demo-frame'
 
 // 菜单 侧边栏
 export const menuAside = [
-    {
-        "title": "空菜单演示",
-        "icon": "folder-o",
-        "children": [
-            {
-                "title": "空菜单 1",
-                "children": [
-                    {
-                        "title": "空菜单 1-1"
-                    },
-                    {
-                        "title": "空菜单 1-2"
-                    }
-                ]
-            },
-            {
-                "title": "空菜单 2"
-            },
-            {
-                "title": "空菜单 3"
-            }
-        ]
-    }
-  // demoComponents,
-  // demoPlugins,
-  // demoCharts,
-  // demoElement,
-  // demoFilters,
-  // demoPlayground,
-  // demoBusiness,
-  // demoD2Crud,
-  // demoFrame
+  demoComponents,
+  demoPlugins,
+  demoCharts,
+  demoElement,
+  demoFilters,
+  demoPlayground,
+  demoBusiness,
+  demoD2Crud,
+  demoFrame
 ]
 
 // 菜单 顶栏

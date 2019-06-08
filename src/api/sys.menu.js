@@ -14,3 +14,10 @@ export function MenuList (data) {
         params:data,
     })
 }
+export function GetMenuListByMenuId (data) {
+    return request({
+        url: '/member/menu/findSubMenuByParentId',
+        method: 'get',
+        params:data,
+    })
+}

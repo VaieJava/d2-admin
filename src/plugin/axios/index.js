@@ -35,7 +35,8 @@ function errorLog (error) {
 
 // 创建一个 axios 实例
 const service = axios.create({
-  baseURL: process.env.VUE_APP_API === 'development' ? 'http://39.107.226.36:9001' : 'http://39.107.226.36:9001', // api的base_url,
+  // baseURL: process.env.VUE_APP_API === 'development' ? 'http://39.107.226.36:9001' : 'http://39.107.226.36:9001', // api的base_url,
+   baseURL: process.env.VUE_APP_API === 'development' ? 'http://127.0.0.1:9001' : 'http://127.0.0.1:9001', // api的base_url,
   timeout: 5000 // 请求超时时间
 })
 

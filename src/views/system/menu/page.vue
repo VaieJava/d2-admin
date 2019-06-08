@@ -17,7 +17,8 @@
 </template>
 
 <script>
-    import { MenuList } from '@api/sys.menu.js'
+    import { MenuList} from '@api/sys.menu.js'
+
     export default {
         // name 值和本页的 $route.name 一致才可以缓存页面
         name: 'demo-business-table-1',
@@ -42,6 +43,7 @@
             this.handleSubmit()
         },
         methods: {
+
             handlePaginationChange(val) {
                 this.page = val
                 this.handleSubmit()
